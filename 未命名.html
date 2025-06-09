@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>正在跳转...</title>
+    <script type="text/javascript">
+        // 立即执行的函数，避免污染全局作用域
+        (function() {
+            // 获取浏览器的 User Agent 字符串
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // 目标链接
+            var iosUrl = "https://a.app.qq.com/o/simple.jsp?pkgname=com.tugugu.www";
+            var otherUrl = "https://m.malink.cn/s/fEvaae";
+
+            // 使用正则表达式判断是否为 iOS 设备 (iPhone, iPad, or iPod)
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                // 如果是 iOS 设备，跳转到指定的 App Store 链接
+                window.location.href = iosUrl;
+            } else {
+                // 否则，跳转到另一个链接
+                window.location.href = otherUrl;
+            }
+        })();
+    </script>
+</head>
+<body>
+    <p>正在根据您的设备类型进行跳转，请稍候...</p>
+</body>
+</html>
