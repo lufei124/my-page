@@ -1,0 +1,179 @@
+.showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.heroBadge {
+  display: inline-flex;
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  background: rgba(136, 157, 240, 0.15);
+  color: #3d3018;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.heroDesc {
+  margin: 0;
+  max-width: 640px;
+  line-height: 1.7;
+  color: #6b5b3d;
+}
+
+.heroTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: rgba(107, 142, 35, 0.1);
+  color: #2d5a27;
+  font-weight: 600;
+}
+
+.chatInput {
+  min-height: 42px;
+  padding: 0.65rem 0.85rem;
+  border: 2px dashed rgba(139, 90, 43, 0.35);
+  border-radius: 12px;
+  background: rgba(255, 252, 240, 0.92);
+  font: inherit;
+  color: #3d3018;
+  flex: 1;
+}
+
+.chatInput:focus {
+  outline: 2px solid rgba(107, 142, 35, 0.4);
+  outline-offset: 2px;
+}
+
+.workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chatPanel,
+.rankPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.messagesWrap {
+  flex: 1;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.15rem;
+}
+
+.message {
+  max-width: 92%;
+  padding: 0.75rem 0.9rem;
+  border-radius: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.user {
+  align-self: flex-end;
+  background: rgba(107, 142, 35, 0.14);
+}
+
+.assistant {
+  align-self: flex-start;
+  background: rgba(255, 252, 240, 0.95);
+  border: 1px solid rgba(139, 90, 43, 0.12);
+}
+
+.error {
+  align-self: stretch;
+  background: rgba(255, 107, 107, 0.12);
+  color: #8b3a3a;
+}
+
+.quickPrompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.quickPrompt {
+  border: 1px solid rgba(139, 90, 43, 0.2);
+  background: rgba(255, 252, 240, 0.9);
+  border-radius: 9999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: #3d3018;
+}
+
+.quickPrompt:hover:not(:disabled) {
+  background: rgba(107, 142, 35, 0.1);
+}
+
+.quickPrompt:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.inputRow {
+  display: flex;
+  gap: 0.65rem;
+  align-items: stretch;
+}
+
+.rankTableWrap {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.repoName {
+  font-weight: 700;
+  color: #6b8e23;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.repoName:hover {
+  text-decoration: underline;
+}
+
+.repoDesc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.emptyRank {
+  padding: 1rem;
+  text-align: center;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .inputRow {
+    flex-direction: column;
+  }
+}

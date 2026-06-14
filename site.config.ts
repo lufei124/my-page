@@ -18,6 +18,7 @@ export const siteConfig = {
     Design: 'app-pink',
     Fullstack: 'app-green',
     AI: 'app-yellow',
+    Agent: 'app-blue',
     Python: 'app-teal',
   } satisfies Record<string, CardColor>,
   defaultCardColor: 'default' as CardColor,

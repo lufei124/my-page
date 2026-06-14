@@ -5,7 +5,7 @@ const siteUrl = process.env.VITE_SITE_URL ?? 'https://yourdomain.com';
 const base = siteUrl.replace(/\/$/, '');
 const distDir = join(process.cwd(), 'dist');
 
-const staticRoutes = ['/', '/projects/last30days'];
+const staticRoutes = ['/', '/projects/github-trend-agent', '/projects/last30days'];
 
 const urls = staticRoutes.map((path) => `${base}${path === '/' ? '' : path}`);
 

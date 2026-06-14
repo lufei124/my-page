@@ -7,6 +7,9 @@ const HomePage = lazy(() => import('@/pages/HomePage'));
 const Last30DaysPage = lazy(
   () => import('@/features/last30days/pages/Last30DaysPage'),
 );
+const GithubTrendAgentPage = lazy(
+  () => import('@/features/github-trend-agent/pages/GithubTrendAgentPage'),
+);
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 function LazyPage({ children }: { children: React.ReactNode }) {
@@ -25,6 +28,14 @@ export const router = createBrowserRouter([
         element: (
           <LazyPage>
             <HomePage />
+          </LazyPage>
+        ),
+      },
+      {
+        path: 'projects/github-trend-agent',
+        element: (
+          <LazyPage>
+            <GithubTrendAgentPage />
           </LazyPage>
         ),
       },

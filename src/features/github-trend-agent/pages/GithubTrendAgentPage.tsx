@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Button } from 'animal-island-ui';
 import { SEOHead } from '@/components/seo/SEOHead';
-import { Last30DaysShowcase } from '@/features/last30days/components/Last30DaysShowcase';
+import { TrendAgentShowcase } from '@/features/github-trend-agent/components/TrendAgentShowcase';
 import { getProjectBySlug } from '@/lib/mdx';
 import { absoluteUrl } from '@/lib/seo';
-import styles from './Last30DaysPage.module.css';
+import styles from './GithubTrendAgentPage.module.css';
 
-export default function Last30DaysPage() {
-  const project = getProjectBySlug('last30days');
+export default function GithubTrendAgentPage() {
+  const project = getProjectBySlug('github-trend-agent');
 
   if (!project) {
     return null;
@@ -18,14 +18,14 @@ export default function Last30DaysPage() {
       <SEOHead
         title={project.title}
         description={project.summary}
-        path="/projects/last30days"
+        path="/projects/github-trend-agent"
         type="article"
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'CreativeWork',
           name: project.title,
           description: project.summary,
-          url: absoluteUrl('/projects/last30days'),
+          url: absoluteUrl('/projects/github-trend-agent'),
           datePublished: project.date,
         }}
       />
@@ -35,7 +35,7 @@ export default function Last30DaysPage() {
             <Button type="default">返回首页</Button>
           </Link>
         </div>
-        <Last30DaysShowcase project={project} />
+        <TrendAgentShowcase project={project} />
       </article>
     </>
   );

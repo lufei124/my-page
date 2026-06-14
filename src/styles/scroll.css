@@ -1,0 +1,54 @@
+.island-scroll,
+[class*='animal-scrollable'] {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--animal-primary-color, #19c8b9)
+    var(--animal-bg-color-secondary, #f0e8d8);
+}
+
+.island-scroll::-webkit-scrollbar,
+[class*='animal-scrollable']::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.island-scroll::-webkit-scrollbar-track,
+[class*='animal-scrollable']::-webkit-scrollbar-track {
+  margin: 6px 0;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--animal-bg-color-secondary, #f0e8d8) 0,
+    var(--animal-bg-color-secondary, #f0e8d8) 6px,
+    var(--animal-bg-color, #f7f3df) 6px,
+    var(--animal-bg-color, #f7f3df) 12px
+  );
+  border-radius: 999px;
+  border: 2px solid var(--animal-border-color-light, #e8e2d6);
+}
+
+.island-scroll::-webkit-scrollbar-thumb,
+[class*='animal-scrollable']::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--animal-primary-color-hover, #3dd4c6) 0%,
+    var(--animal-primary-color, #19c8b9) 55%,
+    var(--animal-primary-color-active, #50b9ab) 100%
+  );
+  border: 2px solid var(--animal-border-color, #c4b89e);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.island-scroll::-webkit-scrollbar-thumb:hover,
+[class*='animal-scrollable']::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    var(--animal-success-color-hover, #85cc45) 0%,
+    var(--animal-success-color, #6fba2c) 100%
+  );
+}
+
+.island-scroll::-webkit-scrollbar-corner,
+[class*='animal-scrollable']::-webkit-scrollbar-corner {
+  background: transparent;
+}
