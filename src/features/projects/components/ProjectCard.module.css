@@ -30,6 +30,12 @@
   line-height: 1.6;
   color: inherit;
   opacity: 0.92;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  min-height: calc(1.6em * 3);
+  word-break: break-word;
 }
 
 .tags {

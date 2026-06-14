@@ -2,8 +2,9 @@ import type { CardColor } from 'animal-island-ui';
 
 export const siteConfig = {
   name: '你的名字',
-  title: 'Animal Island Portfolio',
-  description: '欢迎来到我的岛屿作品集 — 前端与全栈项目展示',
+  title: '狸克发来的岛屿建设日志',
+  description:
+    '欢迎来我的创意孤岛！全栈村民用代码搬砖、钓鱼、砍树拓荒。',
   url: 'https://yourdomain.com',
   locale: 'zh-CN',
   author: {
