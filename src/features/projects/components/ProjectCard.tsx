@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Button, Card, Title } from 'animal-island-ui';
+import { Card, Title } from 'animal-island-ui';
 import type { Project } from '@/types/content';
 import { resolveCardColor, resolveCardPattern } from '../utils/cardTheme';
+import { resolveProjectLink } from '../utils/projectLink';
 import styles from './ProjectCard.module.css';
 
 interface ProjectCardProps {
@@ -11,8 +12,9 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   const color = resolveCardColor(project);
   const pattern = resolveCardPattern(project);
+  const link = resolveProjectLink(project);
 
-  return (
+  const card = (
     <Card
       color={color}
       pattern={pattern ?? 'none'}
@@ -37,27 +39,34 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </span>
         ))}
       </div>
-      <div className={styles.actions}>
-        <Link to={`/projects/${project.slug}`}>
-          <Button type="primary" size="small">
-            详情
-          </Button>
-        </Link>
-        {project.links?.github && (
-          <a href={project.links.github} target="_blank" rel="noreferrer">
-            <Button type="link" size="small">
-              GitHub
-            </Button>
-          </a>
-        )}
-        {project.links?.demo && (
-          <a href={project.links.demo} target="_blank" rel="noreferrer">
-            <Button type="dashed" size="small">
-              Demo
-            </Button>
-          </a>
-        )}
-      </div>
     </Card>
+  );
+
+  if (!link) {
+    return card;
+  }
+
+  if (link.external) {
+    return (
+      <a
+        href={link.href}
+        className={styles.cardLink}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`打开 ${project.title}`}
+      >
+        {card}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      to={link.href}
+      className={styles.cardLink}
+      aria-label={`打开 ${project.title}`}
+    >
+      {card}
+    </Link>
   );
 }

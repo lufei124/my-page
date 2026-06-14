@@ -5,8 +5,8 @@ import { IslandLayout } from '@/components/layout/IslandLayout';
 
 const HomePage = lazy(() => import('@/pages/HomePage'));
 const ProjectsPage = lazy(() => import('@/features/projects/pages/ProjectsPage'));
-const ProjectDetailPage = lazy(
-  () => import('@/features/projects/pages/ProjectDetailPage'),
+const Last30DaysPage = lazy(
+  () => import('@/features/last30days/pages/Last30DaysPage'),
 );
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
@@ -38,12 +38,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'projects/:slug',
+        path: 'projects/last30days',
         element: (
           <LazyPage>
-            <ProjectDetailPage />
+            <Last30DaysPage />
           </LazyPage>
         ),
+      },
+      {
+        path: 'projects/:slug',
+        element: <Navigate to="/" replace />,
       },
       {
         path: 'about',

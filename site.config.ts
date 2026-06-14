@@ -17,15 +17,13 @@ export const siteConfig = {
     email: 'mailto:hello@example.com',
   },
   resumeUrl: '/resume.pdf',
-  nav: [
-    { label: '首页', path: '/' },
-    { label: '项目', path: '/projects' },
-  ],
   cardColorByTag: {
     React: 'app-blue',
     TypeScript: 'app-teal',
     Design: 'app-pink',
     Fullstack: 'app-green',
+    AI: 'app-yellow',
+    Python: 'app-teal',
   } satisfies Record<string, CardColor>,
   defaultCardColor: 'default' as CardColor,
   featuredCardColor: 'app-yellow' as CardColor,
