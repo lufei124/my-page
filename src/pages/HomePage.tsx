@@ -3,9 +3,6 @@ import { HeroSection } from '@/components/sections/HeroSection';
 import { ProjectGrid } from '@/components/sections/ProjectGrid';
 import { siteConfig } from '@/lib/site';
 import { absoluteUrl } from '@/lib/seo';
-import styles from './HomePage.module.css';
-import { Time } from 'animal-island-ui';
-
 export default function HomePage() {
   return (
     <>
@@ -21,9 +18,6 @@ export default function HomePage() {
           sameAs: [siteConfig.social.github].filter(Boolean),
         }}
       />
-      <div className={styles.timeHud}>
-        <Time />
-      </div>
       <HeroSection />
       <ProjectGrid />
     </>

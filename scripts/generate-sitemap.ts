@@ -6,7 +6,7 @@ const base = siteUrl.replace(/\/$/, '');
 const distDir = join(process.cwd(), 'dist');
 const contentDir = join(process.cwd(), 'content');
 
-const staticRoutes = ['/', '/projects', '/about'];
+const staticRoutes = ['/', '/projects'];
 
 function mdxSlugs(folder: string): string[] {
   try {

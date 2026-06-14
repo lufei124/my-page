@@ -20,7 +20,6 @@ export const siteConfig = {
   nav: [
     { label: '首页', path: '/' },
     { label: '项目', path: '/projects' },
-    { label: '关于', path: '/about' },
   ],
   cardColorByTag: {
     React: 'app-blue',

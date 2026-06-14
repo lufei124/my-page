@@ -8,7 +8,6 @@ const ProjectsPage = lazy(() => import('@/features/projects/pages/ProjectsPage')
 const ProjectDetailPage = lazy(
   () => import('@/features/projects/pages/ProjectDetailPage'),
 );
-const AboutPage = lazy(() => import('@/features/about/pages/AboutPage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 function LazyPage({ children }: { children: React.ReactNode }) {
@@ -48,15 +47,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'about',
-        element: (
-          <LazyPage>
-            <AboutPage />
-          </LazyPage>
-        ),
+        element: <Navigate to="/" replace />,
       },
       {
         path: 'contact',
-        element: <Navigate to="/about" replace />,
+        element: <Navigate to="/" replace />,
       },
       {
         path: 'blog',

@@ -13,14 +13,3 @@
   line-height: 1.7;
   color: #6b5b3d;
 }
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.actions a {
-  text-decoration: none;
-}
