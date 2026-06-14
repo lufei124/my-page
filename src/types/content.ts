@@ -1,5 +1,4 @@
 import type { ComponentType } from 'react';
-import type { MDXComponents } from 'mdx/types';
 import type { CardColor } from 'animal-island-ui';
 
 export interface ProjectLinks {
@@ -20,11 +19,5 @@ export interface ProjectFrontmatter {
 
 export interface Project extends ProjectFrontmatter {
   slug: string;
-  Content: ComponentType<{ components?: MDXComponents }>;
-}
-
-export interface FAQItem {
-  id: string;
-  question: string;
-  answer: string;
+  Content: ComponentType;
 }

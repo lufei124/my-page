@@ -38,9 +38,3 @@ export function getAllProjects(): Project[] {
 export function getProjectBySlug(slug: string): Project | undefined {
   return getAllProjects().find((p) => p.slug === slug);
 }
-
-export function getAllTags(items: { tags: string[] }[]): string[] {
-  const tags = new Set<string>();
-  items.forEach((item) => item.tags.forEach((t) => tags.add(t)));
-  return [...tags].sort();
-}

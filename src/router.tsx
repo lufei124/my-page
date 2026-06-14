@@ -4,7 +4,6 @@ import { Loading } from 'animal-island-ui';
 import { IslandLayout } from '@/components/layout/IslandLayout';
 
 const HomePage = lazy(() => import('@/pages/HomePage'));
-const ProjectsPage = lazy(() => import('@/features/projects/pages/ProjectsPage'));
 const Last30DaysPage = lazy(
   () => import('@/features/last30days/pages/Last30DaysPage'),
 );
@@ -30,20 +29,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'projects',
-        element: (
-          <LazyPage>
-            <ProjectsPage />
-          </LazyPage>
-        ),
-      },
-      {
         path: 'projects/last30days',
         element: (
           <LazyPage>
             <Last30DaysPage />
           </LazyPage>
         ),
+      },
+      {
+        path: 'projects',
+        element: <Navigate to="/" replace />,
       },
       {
         path: 'projects/:slug',

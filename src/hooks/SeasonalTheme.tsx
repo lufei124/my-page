@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 
 type Season = 'spring' | 'summer' | 'autumn' | 'winter';
 
@@ -9,8 +9,6 @@ function getSeason(month: number): Season {
   return 'winter';
 }
 
-const SeasonalThemeContext = createContext<Season>('spring');
-
 export function SeasonalThemeProvider({ children }: { children: ReactNode }) {
   const season = getSeason(new Date().getMonth() + 1);
 
@@ -18,13 +16,5 @@ export function SeasonalThemeProvider({ children }: { children: ReactNode }) {
     document.body.dataset.season = season;
   }, [season]);
 
-  return (
-    <SeasonalThemeContext.Provider value={season}>
-      {children}
-    </SeasonalThemeContext.Provider>
-  );
-}
-
-export function useSeasonalTheme() {
-  return useContext(SeasonalThemeContext);
+  return children;
 }
