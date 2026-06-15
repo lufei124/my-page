@@ -61,6 +61,13 @@
   outline-offset: 2px;
 }
 
+.rankSummary {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6b5b3d;
+  line-height: 1.5;
+}
+
 .workspace {
   display: flex;
   flex-direction: column;

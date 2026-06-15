@@ -11,9 +11,10 @@ import {
 } from '../constants';
 import { chatWithDeepSeek } from '../services/deepseekChat';
 import {
-  fetchWeeklyTrendingRepos,
+  fetchTrendingRepos,
   formatReposForPrompt,
 } from '../services/githubTrending';
+import { parseTrendQuery, type TrendQuery } from '../services/parseTrendQuery';
 import { translateDescriptionsToZh } from '../services/translateDescriptions';
 import type { ChatMessage, TrendRepo } from '../types';
 import styles from './TrendAgentShowcase.module.css';
@@ -81,11 +82,12 @@ export function TrendAgentShowcase({ project }: TrendAgentShowcaseProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([
     createMessage(
       'assistant',
-      '你好，岛民！我是 GitHub 趋势 Agent 🏝️ 告诉我你想关注什么方向，我会拉取近 7 天活跃仓库，按 star / fork 综合得分排榜，再用 DeepSeek V4 帮你解读。',
+      '你好，岛民！我是 GitHub 趋势 Agent 🏝️ 你可以问「今天有什么热门项目」「本周 Python 榜」或「本月 AI Agent 方向」，我会按你的问题拉取对应数据并排榜解读。',
     ),
   ]);
   const [input, setInput] = useState('');
   const [repos, setRepos] = useState<TrendRepo[]>([]);
+  const [rankMeta, setRankMeta] = useState<TrendQuery | null>(null);
   const [loading, setLoading] = useState(false);
 
   const canSend = useMemo(
@@ -112,7 +114,12 @@ export function TrendAgentShowcase({ project }: TrendAgentShowcaseProps) {
     setLoading(true);
 
     try {
-      const trending = await fetchWeeklyTrendingRepos();
+      const query = parseTrendQuery(text);
+      const trending = await fetchTrendingRepos({
+        days: query.days,
+        language: query.language,
+        keyword: query.keyword,
+      });
       const descriptions = await translateDescriptionsToZh(
         trending.map((repo) => repo.description),
         AGENT_CONFIG.deepseekKey.trim(),
@@ -122,6 +129,7 @@ export function TrendAgentShowcase({ project }: TrendAgentShowcaseProps) {
         ...repo,
         description: descriptions[index] ?? repo.description,
       }));
+      setRankMeta(query);
       setRepos(trendingWithZh);
 
       const priorMessages = messages
@@ -140,7 +148,7 @@ export function TrendAgentShowcase({ project }: TrendAgentShowcaseProps) {
           ...priorMessages,
           {
             role: 'user',
-            content: `【本周 GitHub 热门项目数据（按综合得分排序）】\n${formatReposForPrompt(trendingWithZh)}\n\n【用户问题】\n${text}`,
+            content: `【${query.title}】\n${formatReposForPrompt(trendingWithZh, query)}\n\n【用户问题】\n${text}`,
           },
         ],
       });
@@ -218,7 +226,7 @@ export function TrendAgentShowcase({ project }: TrendAgentShowcaseProps) {
               className={styles.chatInput}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="例如：帮我看看这周 AI Agent 方向的热门仓库"
+              placeholder="例如：看看今天 AI Agent 方向的热门仓库"
               onKeyDown={(e) => e.key === 'Enter' && canSend && handleSend()}
               disabled={loading}
             />
@@ -235,11 +243,15 @@ export function TrendAgentShowcase({ project }: TrendAgentShowcaseProps) {
 
         <section className={styles.rankPanel} aria-label="热门排行">
           <Title size="small" color="app-pink">
-            本周数据榜
+            {rankMeta?.title ?? '查询结果榜'}
           </Title>
+          {rankMeta && (
+            <p className={styles.rankSummary}>{rankMeta.summary}</p>
+          )}
           {repos.length === 0 ? (
             <Card color="app-yellow" className={styles.emptyRank}>
-              发送消息后，这里会显示基于 GitHub 近 7 天活跃数据的排行榜。
+              发送消息后，这里会根据你的问题展示对应范围的数据榜，例如「今日」「本周
+              Python」「本月 AI Agent」。
             </Card>
           ) : (
             <div className={styles.rankTableWrap}>

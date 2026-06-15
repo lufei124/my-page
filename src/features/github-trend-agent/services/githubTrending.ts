@@ -1,4 +1,5 @@
 import type { TrendRepo } from '../types';
+import type { TrendQuery } from './parseTrendQuery';
 
 interface GitHubSearchItem {
   full_name: string;
@@ -16,9 +17,17 @@ interface GitHubSearchResponse {
   total_count: number;
 }
 
-function weekAgoDate(): string {
+export interface FetchTrendingOptions {
+  days?: number;
+  language?: string;
+  keyword?: string;
+  githubToken?: string;
+  limit?: number;
+}
+
+function daysAgoDate(days: number): string {
   const date = new Date();
-  date.setDate(date.getDate() - 7);
+  date.setDate(date.getDate() - days);
   return date.toISOString().split('T')[0];
 }
 
@@ -30,12 +39,26 @@ function computeScore(item: GitHubSearchItem): number {
   );
 }
 
-export async function fetchWeeklyTrendingRepos(
-  githubToken?: string,
-  limit = 20,
+function buildSearchQuery(options: FetchTrendingOptions): string {
+  const since = daysAgoDate(options.days ?? 7);
+  const parts = [`pushed:>${since}`, 'stars:>20'];
+
+  if (options.language) {
+    parts.push(`language:${options.language}`);
+  }
+
+  if (options.keyword?.trim()) {
+    parts.push(options.keyword.trim());
+  }
+
+  return parts.join(' ');
+}
+
+export async function fetchTrendingRepos(
+  options: FetchTrendingOptions = {},
 ): Promise<TrendRepo[]> {
-  const since = weekAgoDate();
-  const query = encodeURIComponent(`pushed:>${since} stars:>20`);
+  const limit = options.limit ?? 20;
+  const query = encodeURIComponent(buildSearchQuery(options));
   const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=${Math.min(limit, 30)}`;
 
   const headers: HeadersInit = {
@@ -43,8 +66,8 @@ export async function fetchWeeklyTrendingRepos(
     'X-GitHub-Api-Version': '2022-11-28',
   };
 
-  if (githubToken?.trim()) {
-    headers.Authorization = `Bearer ${githubToken.trim()}`;
+  if (options.githubToken?.trim()) {
+    headers.Authorization = `Bearer ${options.githubToken.trim()}`;
   }
 
   const response = await fetch(url, { headers });
@@ -80,18 +103,32 @@ export async function fetchWeeklyTrendingRepos(
     }));
 }
 
-export function formatReposForPrompt(repos: TrendRepo[]): string {
+export async function fetchWeeklyTrendingRepos(
+  githubToken?: string,
+  limit = 20,
+): Promise<TrendRepo[]> {
+  return fetchTrendingRepos({ days: 7, githubToken, limit });
+}
+
+export function formatReposForPrompt(
+  repos: TrendRepo[],
+  query: TrendQuery,
+): string {
   return JSON.stringify(
-    repos.map((repo) => ({
-      rank: repo.rank,
-      name: repo.fullName,
-      stars: repo.stars,
-      forks: repo.forks,
-      language: repo.language,
-      score: Math.round(repo.score),
-      description: repo.description,
-      url: repo.url,
-    })),
+    {
+      title: query.title,
+      summary: query.summary,
+      items: repos.map((repo) => ({
+        rank: repo.rank,
+        name: repo.fullName,
+        stars: repo.stars,
+        forks: repo.forks,
+        language: repo.language,
+        score: Math.round(repo.score),
+        description: repo.description,
+        url: repo.url,
+      })),
+    },
     null,
     2,
   );
