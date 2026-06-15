@@ -34,13 +34,4 @@ export default defineConfig({
       },
     },
   },
-  server: {
-    proxy: {
-      '/api/deepseek': {
-        target: 'https://api.deepseek.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/deepseek/, ''),
-      },
-    },
-  },
 });

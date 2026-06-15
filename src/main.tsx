@@ -6,7 +6,6 @@ import 'animal-island-ui/style';
 import { router } from './router';
 import { SeasonalThemeProvider } from './hooks/SeasonalTheme';
 import './styles/global.css';
-import './styles/scroll.css';
 import './styles/seasonal.css';
 
 createRoot(document.getElementById('root')!).render(
